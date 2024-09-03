@@ -1,0 +1,67 @@
+import sympy as sp
+from sympy import *
+
+print("Enter 1 for Addition \nEnter 2 for subtraction \nEnter 3 for multiplication \nEnter 4 for division \nEnter 5 for Derivation \nEnter 6 for integration")
+print()
+
+def calculate():
+    button = int(input("Enter the number(1-6): "))
+
+    if button >= 1 and button <= 4:
+        num1 = eval(input("Enter First Number: "))
+        num2 = eval(input("Enter Second Number: "))
+
+        if button == 1:
+            result = num1 + num2
+        elif button == 2:
+            result = num1 - num2
+        elif button == 3:
+            result = num1 * num2
+        else:
+            result = num1 / num2
+        
+        print(f"Result: {result}")
+
+    elif button == 5:
+        def solve_derivative(derivative_str):
+            x = symbols("x")
+            expr = sympify(derivative_str)
+
+            result = diff(expr,x)
+
+            return result
+
+        derivative_str = input("Enter the derivative: ")
+
+        result = solve_derivative(derivative_str)
+
+        print(f"Derivative of {derivative_str} is: {result}")
+
+    elif button == 6: 
+        def solve_integration(integrate_str):
+            x = symbols("x")
+            expr = sympify(integrate_str)
+
+            result = integrate(expr,x)
+
+            return result
+        
+        integrate_str = input("Enter Your Inetgral: ")
+
+        result = solve_integration(integrate_str)
+
+        print(f"The Integral of {integrate_str} is: {result}")
+
+ask = True
+while True:
+    calculate()
+
+    print("Do you want to continue (yes / no): ",end = "")
+    user_input = input().lower()
+    if user_input == "no":
+        print("Thanks for Calculating")
+        break
+    elif user_input == "yes":
+        ask = True
+    else:
+        print("Invalid Input")
