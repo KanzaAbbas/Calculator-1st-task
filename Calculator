@@ -1,67 +1,109 @@
+#requirements for the code
+'''1) calculator with integral and derivative calculations
+   2) ask the user to continue of not
+   3) dice roll game, points = number of calculations '''
+
+       
+import random
 import sympy as sp
 from sympy import *
 
+def get_integer_input(prompt):
+    while True:
+        try:
+            return int(input(prompt))
+        except ValueError:
+            print("Please enter a valid integer")
+
+def roll_dice():
+    return random.randint(1,6)
+
+def play_game(max_rolls = 5):
+    score = 0
+    for roll in range(max_rolls):
+        result = roll_dice()
+        print(f"You rolled a {result}: ")
+        if result == 6:
+            score += 1
+            print(f"You got a 6! Your score is now: {score}")
+    return score
+
+print("\t\t\t GUIDELINES")
+print()
 print("Enter 1 for Addition \nEnter 2 for subtraction \nEnter 3 for multiplication \nEnter 4 for division \nEnter 5 for Derivation \nEnter 6 for integration")
+print()
+print("play THE DICE ROLL GAME for points")
 print()
 
 def calculate():
-    button = int(input("Enter the number(1-6): "))
+    points = play_game()
+    if points == 0:
+        print("You didn't earn any points. Sorry! you can't use the calculator:( ")
+    else:
+        print(f"You have {points} points to use the Calculator")
+        for points in range(points):
+            button = get_integer_input("Enter the number(1-6): ")
 
-    if button >= 1 and button <= 4:
-        num1 = eval(input("Enter First Number: "))
-        num2 = eval(input("Enter Second Number: "))
 
-        if button == 1:
-            result = num1 + num2
-        elif button == 2:
-            result = num1 - num2
-        elif button == 3:
-            result = num1 * num2
-        else:
-            result = num1 / num2
+
+        if button >= 1 and button <= 4:
+            num1 = eval(input("Enter First Number: "))
+            num2 = eval(input("Enter Second Number: "))
+
+            if button == 1:
+                result = num1 + num2
+            elif button == 2:
+                result = num1 - num2
+            elif button == 3:
+                result = num1 * num2
+            elif button == 4:
+                result = num1 / num2
+            else:
+                print("Invalid Button Number!")
+                return
         
-        print(f"Result: {result}")
+            print(f"Result: {result}")
 
-    elif button == 5:
-        def solve_derivative(derivative_str):
-            x = symbols("x")
-            expr = sympify(derivative_str)
+        elif button == 5:
+            def solve_derivative(derivative_str):
+                x = symbols("x")
+                expr = sympify(derivative_str)
 
-            result = diff(expr,x)
+                result = diff(expr,x)
 
-            return result
+                return result
 
-        derivative_str = input("Enter the derivative: ")
+            derivative_str = input("Enter the derivative: ")
 
-        result = solve_derivative(derivative_str)
+            result = solve_derivative(derivative_str)
 
-        print(f"Derivative of {derivative_str} is: {result}")
+            print(f"Derivative of {derivative_str} is: {result}")
 
-    elif button == 6: 
-        def solve_integration(integrate_str):
-            x = symbols("x")
-            expr = sympify(integrate_str)
+        elif button == 6:
+            def solve_integration(integrate_str):
+                x = symbols("x")
+                expr = sympify(integrate_str)
 
-            result = integrate(expr,x)
+                result = integrate(expr,x)
 
-            return result
+                return result
         
-        integrate_str = input("Enter Your Inetgral: ")
+            integrate_str = input("Enter Your Inetgral: ")
 
-        result = solve_integration(integrate_str)
+            result = solve_integration(integrate_str)
 
-        print(f"The Integral of {integrate_str} is: {result}")
+            print(f"The Integral of {integrate_str} is: {result}")
 
-ask = True
+
 while True:
     calculate()
-
     print("Do you want to continue (yes / no): ",end = "")
     user_input = input().lower()
     if user_input == "no":
         print("Thanks for Calculating")
         break
     elif user_input == "yes":
-        ask = True
+        continue
     else:
         print("Invalid Input")
+        
