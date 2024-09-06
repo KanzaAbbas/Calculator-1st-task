@@ -1,0 +1,115 @@
+import numpy as np
+import statistics
+from sklearn.linear_model import LinearRegression
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+
+print("\t\t\t GUIDELINES")
+print()
+print("Enter 1 for Age Title")
+print("Enter 2 for Prime Numbers")
+print("Enter 3 for Calculating Mean, Median, Standard Deviation")
+print("Enter 4 for Linear Regression, Correlation and Simple Plot between User's Age and Favourite Number")
+print()
+
+button = int(input("Enter the button(1-4): "))
+
+name = input("Enter Your Name: ")
+
+if button == 1:
+    def age_title(age):
+        if age < 18:
+            print("You're a Minor!")
+        elif age >= 18 and age < 21:
+            print("You're an Adult!")
+        elif age == 21:
+            print("You're 21, Congratulations!!") 
+        else:
+            print("Invalid Input")
+
+    age = int(input("Enter Your Age: "))
+    age_title(age)
+
+#prime number
+
+if button == 2:
+    for num in range(2,101):
+        for i in range(2, num):
+            if num % i == 0:
+                break
+        else:
+            print(num)
+
+
+#Calculating mean, median, standard deviation
+
+if button == 3:
+    data = np.random.randint(1,100,10)
+    print(data)
+
+#mean
+    mean = sum(data) / len(data)
+
+    print(f"Mean = {round(mean,2)}")
+
+
+#median
+    data.sort()
+    print(f"Sorted Data = {data}")
+
+    length = len(data)
+    mid = (length // 2)
+
+    if length % 2 == 0:
+        median = ((data[mid - 1] + data[mid]) / 2)
+    else:
+        median = data[mid]
+
+    print(f"Median = {median}")
+
+
+#standard deviation
+    standard_devaition = statistics.stdev(data) #use this
+    print(f"standard_devaition = {round(standard_devaition,2)}")
+
+
+#linear regression, correlation and simple plot between user's age and favourite number
+
+if button == 4:
+    from sklearn.linear_model import LinearRegression
+    import numpy as np
+    import statistics
+    import matplotlib.pyplot as plt
+
+
+    age_list = [20, 25, 30, 35, 40]
+    fav_num_list = [5, 7, 8, 10, 12]
+
+    correlation = statistics.correlation(age_list, fav_num_list)
+    print(f"Correlation coefficient between age and favorite number: {correlation:.2f}")
+
+
+    X = np.array(age_list).reshape(-1, 1)  
+    y = np.array(fav_num_list)  
+
+    model = LinearRegression()
+    model.fit(X, y)
+
+
+    new_age = int(input("Enter a new age: "))
+    predicted_fav_num = model.predict([[new_age]])[0]
+
+    print(f"Predicted favorite number for age {new_age}: {predicted_fav_num:.2f}")
+
+
+    plt.scatter(age_list, fav_num_list, color='blue', label='Data points')  
+    plt.plot(age_list, model.predict(X), color='red', label='Regression line')  
+
+
+    plt.scatter([new_age], [predicted_fav_num], color='green', label=f'Predicted fav num for age {new_age}')
+    plt.xlabel('Age')
+    plt.ylabel('Favorite Number')
+    plt.legend()
+    plt.show()
